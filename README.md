@@ -1,27 +1,115 @@
+# Neo-Villagers - The wizard
+This mod adds the wizard villager that trades nether items.
 
-Installation information
-=======
+## Workstation
+Unenchanting table
 
-This template repository can be directly cloned to get you started with a new
-mod. Simply create a new repository cloned from this one, by following the
-instructions at [github](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+### Feature
+The Unenchanting table is used to recover an enchantment from an armor, weapon, tool or book. It also serves as Wizard's job site block.
 
-Once you have your clone, simply open the repository in the IDE of your choice. The usual recommendation for an IDE is either IntelliJ IDEA or Eclipse.
+To recover an enchantment is needed an item with the enchantment to remove, a number of Lapis block (it depends of the enchantment rarity, can be from 1 to 4) and a writable book. The process spends experience from the player (it is between 1 to 4 based in the enchantment rarity).
 
-> **Note**: For Eclipse, use tasks in `Launch Group` instead of ones founds in `Java Application`. A preparation task must run before launching the game. NeoGradle uses launch groups to do these subsequently.
+It is possible that the enchantment level decrease when it is recovered from the item.
 
-If at any point you are missing libraries in your IDE, or you've run into problems you can
-run `gradlew --refresh-dependencies` to refresh the local cache. `gradlew clean` to reset everything 
-{this does not affect your code} and then start the process again.
+### Crafting
+Requires two lapis lazuli, three lapis block, one grindstone, one enchanting table and three amethyst block.
 
-Mapping Names:
-============
-By default, the MDK is configured to use the official mapping names from Mojang for methods and fields 
-in the Minecraft codebase. These names are covered by a specific license. All modders should be aware of this
-license. For the latest license text, refer to the mapping file itself, or the reference copy here:
-https://github.com/NeoForged/NeoForm/blob/main/Mojang.md
-
-Additional Resources: 
-==========
-Community Documentation: https://docs.neoforged.net/  
-NeoForged Discord: https://discord.neoforged.net/
+## Trades
+<table>
+  <tr>
+    <th style="width:10%">Level</th>
+    <th style="width:10%">Item wanted</th><th style="width:10%">Default quantity</th>
+    <th style="width:10%">Item given</th><th style="width:10%">Quantity</th>
+    <th style="width:10%">Number of trades</th><th style="width:10%">XP</th>
+  </tr>
+  <tr>
+    <td rowspan=3>1</td>
+    <td>Netherrack</td><td>20</td>
+    <td>Emerald</td><td>1</td>
+    <td>16</td><td>2</td>
+  </tr>
+  <tr>
+    <td>Blackstone</td><td>20</td>
+    <td>Emerald</td><td>1</td>
+    <td>16</td><td>4</td>
+  </tr>
+  <tr>
+    <td>Obsidian</td><td>4</td>
+    <td>Emerald</td><td>1</td>
+    <td>8</td><td>6</td>
+  </tr>
+  <tr>
+    <td rowspan=3>2</td>
+    <td>Soul sand</td><td>16</td>
+    <td>Emerald</td><td>1</td>
+    <td>8</td><td>8</td>
+  </tr>
+  <tr>
+    <td>Magma block</td><td>16</td>
+    <td>Emerald</td><td>1</td>
+    <td>8</td><td>8</td>
+  </tr>
+  <tr>
+    <td>Gravel</td><td>16</td>
+    <td>Emerald</td><td>1</td>
+    <td>8</td><td>8</td>
+  </tr>
+  <tr>
+    <td rowspan=3>3</td>
+    <td>Emerald</td><td>1</td>
+    <td>Glowstone dust</td><td>8</td>
+    <td>12</td><td>6</td>
+  </tr>
+  <tr>
+    <td>Basalt</td><td>24</td>
+    <td>Emerald</td><td>1</td>
+    <td>32</td><td>2</td>
+  </tr>
+  <tr>
+    <td>Emerald</td><td>2</td>
+    <td>Crimson stem</td><td>5</td>
+    <td>6</td><td>6</td>
+  </tr>
+  <tr>
+    <td rowspan=4>4</td>
+    <td>Soul soil</td><td>16</td>
+    <td>Emerald</td><td>1</td>
+    <td>8</td><td>8</td>
+  </tr>
+  <tr>
+    <td>Emerald</td><td>1</td>
+    <td>Quartz</td><td>3</td>
+    <td>12</td><td>6</td>
+  </tr>
+  <tr>
+    <td>Emerald</td><td>2</td>
+    <td>Warped stem</td><td>5</td>
+    <td>6</td><td>6</td>
+  </tr>
+  <tr>
+    <td>Warped wart block</td><td>16</td>
+    <td>Emerald</td><td>1</td>
+    <td>8</td><td>8</td>
+  </tr>
+  <tr>
+    <td rowspan=4>5</td>
+    <td>Emerald</td><td>1</td>
+    <td>Crimson roots</td><td>3</td>
+    <td>12</td><td>6</td>
+  </tr>
+  <tr>
+    <td>Emerald</td><td>1</td>
+    <td>Warped roots</td><td>3</td>
+    <td>12</td><td>6</td>
+  </tr>
+  <tr>
+    <td>Emerald</td><td>1</td>
+    <td>Shroomlight</td><td>4</td>
+    <td>6</td><td>6</td>
+  </tr>
+  <tr>
+    <td>Nether wart block</td><td>16</td>
+    <td>Emerald</td><td>1</td>
+    <td>8</td><td>8</td>
+  </tr>
+</table>
