@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "neovillagerswizard:block/unenchanting"
+    },
+    "facing=east": {
+      "model": "neovillagerswizard:block/unenchanting",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "neovillagerswizard:block/unenchanting",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "neovillagerswizard:block/unenchanting",
+      "y": 270
+    }
+  }
+}

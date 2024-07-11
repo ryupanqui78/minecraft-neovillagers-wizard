@@ -1,0 +1,29 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"#G#",
+		"LEL",
+		"AAA"
+	],
+	"key": {
+		"#": {
+			"item": "minecraft:lapis_lazuli"
+		},
+		"G": {
+			"item": "minecraft:grindstone"
+		},
+		"L": {
+			"item": "minecraft:lapis_block"
+		},
+		"E": {
+			"item": "minecraft:enchanting_table"
+		},
+		"A": {
+			"item": "minecraft:amethyst_block"
+		}
+	},
+	"result": {
+		"item": "neovillagerswizard:unenchanting",
+		"count": 1
+	}
+}
