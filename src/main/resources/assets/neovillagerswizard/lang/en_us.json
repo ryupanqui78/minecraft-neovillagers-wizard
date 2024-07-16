@@ -1,3 +1,5 @@
 {
-  "block.neovillagerswizard.unenchanting": "Unenchanting Table"
+  "block.neovillagerswizard.unenchanting": "Unenchanting Table",
+  
+  "entity.minecraft.villager.neovillagers.wizard": "Wizard"
 }

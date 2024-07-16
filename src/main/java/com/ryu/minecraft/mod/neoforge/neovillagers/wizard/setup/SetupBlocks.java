@@ -13,12 +13,12 @@ public class SetupBlocks {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(NeoVillagersWizard.MODID);
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(NeoVillagersWizard.MODID);
     
-    public static final DeferredBlock<UnenchantingBlock> UNENCHANTING_TABLE = SetupBlocks.BLOCKS.registerBlock(
+    public static final DeferredBlock<UnenchantingBlock> UNENCHANTING = SetupBlocks.BLOCKS.registerBlock(
             UnenchantingBlock.BLOCK_NAME, UnenchantingBlock::new,
             BlockBehaviour.Properties.of().strength(1.5f).requiresCorrectToolForDrops());
     
-    public static final DeferredItem<BlockItem> UNENCHANTING_TABLE_ITEM = SetupBlocks.ITEMS
-            .registerSimpleBlockItem(SetupBlocks.UNENCHANTING_TABLE);
+    public static final DeferredItem<BlockItem> UNENCHANTING_ITEM = SetupBlocks.ITEMS
+            .registerSimpleBlockItem(SetupBlocks.UNENCHANTING);
     
     private SetupBlocks() {
     }

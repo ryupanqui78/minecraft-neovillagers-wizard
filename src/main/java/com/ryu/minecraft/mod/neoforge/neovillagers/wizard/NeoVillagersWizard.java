@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
 import com.ryu.minecraft.mod.neoforge.neovillagers.wizard.setup.SetupBlocks;
+import com.ryu.minecraft.mod.neoforge.neovillagers.wizard.setup.SetupVillagers;
 
 import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.bus.api.IEventBus;
@@ -20,12 +21,14 @@ public class NeoVillagersWizard {
         SetupBlocks.BLOCKS.register(modEventBus);
         SetupBlocks.ITEMS.register(modEventBus);
         
+        SetupVillagers.register(modEventBus);
+        
         modEventBus.addListener(this::addCreative);
     }
     
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
-            event.accept(SetupBlocks.UNENCHANTING_TABLE);
+            event.accept(SetupBlocks.UNENCHANTING);
         }
     }
 }
