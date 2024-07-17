@@ -1,5 +1,7 @@
 {
   "block.neovillagerswizard.unenchanting": "Unenchanting Table",
   
-  "entity.minecraft.villager.neovillagers.wizard": "Wizard"
+  "entity.minecraft.villager.neovillagers.wizard": "Wizard",
+  
+  "screen.container.unenchanting": "Unenchanting table"
 }

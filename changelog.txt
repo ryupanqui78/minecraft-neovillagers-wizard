@@ -1,5 +1,6 @@
 0.0.2-1.20.4:
  - New villager: The wizard, that trades nether items and uses the unenchanting table.
+ - Adding menu to unenchanting block.
 0.0.1-1.20.4:
  - Clean project.
  - New block: The unenchanting table.

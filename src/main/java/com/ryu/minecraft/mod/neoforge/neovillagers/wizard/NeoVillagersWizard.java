@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
 import com.ryu.minecraft.mod.neoforge.neovillagers.wizard.setup.SetupBlocks;
+import com.ryu.minecraft.mod.neoforge.neovillagers.wizard.setup.SetupMenus;
 import com.ryu.minecraft.mod.neoforge.neovillagers.wizard.setup.SetupVillagers;
 
 import net.minecraft.world.item.CreativeModeTabs;
@@ -20,6 +21,7 @@ public class NeoVillagersWizard {
     public NeoVillagersWizard(IEventBus modEventBus) {
         SetupBlocks.BLOCKS.register(modEventBus);
         SetupBlocks.ITEMS.register(modEventBus);
+        SetupMenus.MENUS.register(modEventBus);
         
         SetupVillagers.register(modEventBus);
         
