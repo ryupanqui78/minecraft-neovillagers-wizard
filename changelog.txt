@@ -2,6 +2,7 @@
  - New villager: The wizard, that trades nether items and uses the unenchanting table.
  - Adding menu to Unenchanting block.
  - Adding tooltip to Unenchanting screen.
+ - Unenchanting items in Unechanting block.
 0.0.1-1.20.4:
  - Clean project.
  - New block: The Unenchanting table.
