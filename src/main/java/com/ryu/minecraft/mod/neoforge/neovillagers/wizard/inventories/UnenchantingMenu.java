@@ -186,6 +186,18 @@ public class UnenchantingMenu extends AbstractContainerMenu {
         }
     }
     
+    public int getCurrentNumLapis() {
+        return this.currentNumLapis;
+    }
+    
+    public int[] getEnchantDamage() {
+        return this.enchantDamage;
+    }
+    
+    public int[] getEnchantMinLevel() {
+        return this.enchantMinLevel;
+    }
+    
     private boolean hasAllInputSlot() {
         boolean hasValues = false;
         if (!this.inputSlots.isEmpty()) {
@@ -347,4 +359,5 @@ public class UnenchantingMenu extends AbstractContainerMenu {
     public boolean stillValid(Player pPlayer) {
         return AbstractContainerMenu.stillValid(this.access, pPlayer, SetupBlocks.UNENCHANTING.get());
     }
+    
 }

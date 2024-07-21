@@ -1,6 +1,10 @@
 {
   "block.neovillagerswizard.unenchanting": "Unenchanting Table",
   
+  "container.unenchanting.block.lapis.one": "1 Block of Lapis Lazuli",
+  "container.unenchanting.block.lapis.many": "%s Blocks of Lapis Lazuli",
+  "container.unenchanting.damage": "%s%% damage to receive",
+    
   "entity.minecraft.villager.neovillagers.wizard": "Wizard",
   
   "screen.container.unenchanting": "Unenchanting table"

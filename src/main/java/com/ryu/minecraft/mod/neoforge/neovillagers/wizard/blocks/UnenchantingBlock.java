@@ -52,6 +52,12 @@ public class UnenchantingBlock extends Block {
     }
     
     @Override
+    public MenuProvider getMenuProvider(BlockState pState, Level pLevel, BlockPos pPos) {
+        return new SimpleMenuProvider((pContainerId, playerInv, pAccess) -> new UnenchantingMenu(pContainerId,
+                playerInv, ContainerLevelAccess.create(pLevel, pPos)), UnenchantingBlock.CONTAINER_TITLE);
+    }
+    
+    @Override
     public RenderShape getRenderShape(BlockState pState) {
         return RenderShape.MODEL;
     }
@@ -65,12 +71,6 @@ public class UnenchantingBlock extends Block {
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
         return this.defaultBlockState().setValue(UnenchantingBlock.FACING,
                 pContext.getHorizontalDirection().getOpposite());
-    }
-    
-    @Override
-    public MenuProvider getMenuProvider(BlockState pState, Level pLevel, BlockPos pPos) {
-        return new SimpleMenuProvider((pContainerId, playerInv, pAccess) -> new UnenchantingMenu(pContainerId,
-                playerInv, ContainerLevelAccess.create(pLevel, pPos)), UnenchantingBlock.CONTAINER_TITLE);
     }
     
     @Override
