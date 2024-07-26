@@ -7,12 +7,15 @@ Unenchanting table
 ### Feature
 The Unenchanting table is used to recover an enchantment from an armor, weapon, tool or book. It also serves as Wizard's job site block.
 
-To recover an enchantment is needed an item with the enchantment to remove, a number of Lapis block (it depends of the enchantment rarity, can be from 1 to 4) and a writable book. The process spends experience from the player (it is between 1 to 4 based in the enchantment rarity).
+Although the player must have at least the level requirement to recover an enchantment,  the number of levels that the player is charged is the same as the lapis block requirement. For example, To get an enchantment of rare rarity, the player must have at least 15 levels, but pay only 3 levels and 3 lapis blocks; but always must require a writable block.
 
-It is possible that the enchantment level decrease when it is recovered from the item.
+To increase the enchantment level, bookshelves can be placed next to the unenchanting table while keeping one block air between them (As the enchanting table), the enchantment level decrease when it is recovered from the item.
+
+### Recipe requirements
+To get the recipe is required to craft a grindstone and an enchanting table.
 
 ### Crafting
-Requires two lapis lazuli, three lapis block, one grindstone, one enchanting table and three amethyst block.
+Requires two lapis lazuli, two lapis block, one grindstone, one enchanting table and three amethyst blocks.
 
 ## Trades
 <table>

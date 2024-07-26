@@ -1,3 +1,5 @@
+0.1.2-1.20.4:
+ - Releasing the mod.
 0.0.2-1.20.4:
  - New villager: The wizard, that trades nether items and uses the unenchanting table.
  - Adding menu to Unenchanting block.
