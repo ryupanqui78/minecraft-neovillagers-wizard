@@ -119,9 +119,10 @@ public class UnenchantingMenu extends AbstractContainerMenu {
         this.access.execute(
                 (level, blockPos) -> this.totalPower = UnenchantingHelper.calculateTotalPower(level, blockPos));
         
-        this.addSlot(new SlotEnchantInput(this.inputSlots, 0, 26, 20));
-        this.addSlot(new SlotBookInput(this.inputSlots, 1, 66, 30));
-        this.addSlot(new ItemSlotInput(this.inputSlots, 2, 26, 41, Items.LAPIS_BLOCK));
+        this.addSlot(new SlotEnchantInput(this.inputSlots, UnenchantingMenu.SLOT_INPUT_ITEM_INDEX, 26, 20));
+        this.addSlot(new SlotBookInput(this.inputSlots, UnenchantingMenu.SLOT_WRITABLE_BOOK_INDEX, 66, 30));
+        this.addSlot(
+                new ItemSlotInput(this.inputSlots, UnenchantingMenu.SLOT_LAPIS_BLOCK_INDEX, 26, 41, Items.LAPIS_BLOCK));
         
         for (int i = 0; i < this.resultSlots.length; i++) {
             this.resultSlots[i] = new ResultContainer();
@@ -201,19 +202,31 @@ public class UnenchantingMenu extends AbstractContainerMenu {
     private boolean hasAllInputSlot() {
         boolean hasValues = false;
         if (!this.inputSlots.isEmpty()) {
-            final boolean hasBook = !this.inputSlots.getItem(UnenchantingMenu.SLOT_WRITABLE_BOOK_INDEX).isEmpty();
-            final boolean hasLapis = !this.inputSlots.getItem(UnenchantingMenu.SLOT_LAPIS_BLOCK_INDEX).isEmpty();
             final boolean hasItem = !this.inputSlots.getItem(UnenchantingMenu.SLOT_INPUT_ITEM_INDEX).isEmpty();
-            hasValues = hasBook && hasLapis && hasItem;
+            if (!this.player.getAbilities().instabuild) {
+                final boolean hasBook = !this.inputSlots.getItem(UnenchantingMenu.SLOT_WRITABLE_BOOK_INDEX).isEmpty();
+                final boolean hasLapis = !this.inputSlots.getItem(UnenchantingMenu.SLOT_LAPIS_BLOCK_INDEX).isEmpty();
+                hasValues = hasBook && hasLapis && hasItem;
+            } else {
+                hasValues = hasItem;
+            }
         }
         return hasValues;
     }
     
+    public boolean isInCreativeMode() {
+        return this.player.getAbilities().instabuild;
+    }
+    
     protected boolean mayPickup(int pIndex) {
-        final ItemStack inputLapis = this.inputSlots.getItem(UnenchantingMenu.SLOT_LAPIS_BLOCK_INDEX);
-        
-        return (this.player.experienceLevel >= UnenchantingMenu.REQUIRE_EXPERIENCE[pIndex])
-                && (inputLapis.getCount() >= (pIndex + 1));
+        boolean mayPickup = this.isInCreativeMode();
+        if (!mayPickup) {
+            final ItemStack inputLapis = this.inputSlots.getItem(UnenchantingMenu.SLOT_LAPIS_BLOCK_INDEX);
+            
+            mayPickup = (this.player.experienceLevel >= UnenchantingMenu.REQUIRE_EXPERIENCE[pIndex])
+                    && (inputLapis.getCount() >= (pIndex + 1));
+        }
+        return mayPickup;
     }
     
     protected void onTake(ItemStack pStack) {
@@ -270,11 +283,11 @@ public class UnenchantingMenu extends AbstractContainerMenu {
                     this.inputSlots.setItem(UnenchantingMenu.SLOT_INPUT_ITEM_INDEX, newItemStack);
                 }
             }
-            this.broadcastChanges();
         }
         this.inputSlots.removeItem(UnenchantingMenu.SLOT_WRITABLE_BOOK_INDEX, 1);
         this.inputSlots.removeItem(UnenchantingMenu.SLOT_LAPIS_BLOCK_INDEX, cost);
         this.player.giveExperienceLevels(-cost);
+        this.broadcastChanges();
     }
     
     @Override
@@ -323,24 +336,25 @@ public class UnenchantingMenu extends AbstractContainerMenu {
     
     @Override
     public void slotsChanged(Container pContainer) {
-        if ((pContainer == this.inputSlots) && this.hasAllInputSlot()) {
+        this.cleanEnchantInfo();
+        if (this.hasAllInputSlot()) {
             final ItemStack inputItem = this.inputSlots.getItem(UnenchantingMenu.SLOT_INPUT_ITEM_INDEX);
             final Map<Enchantment, Integer> enchantmentMap = EnchantmentHelper.getEnchantments(inputItem);
             
             enchantmentMap.keySet().forEach(enchantment -> {
                 final Rarity rarity = enchantment.getRarity();
                 final int level = enchantmentMap.get(enchantment);
-                switch (rarity.getWeight()) {
-                case 1:
+                switch (rarity) {
+                case VERY_RARE:
                     this.changeResult(this.resultSlots[3], enchantment, level, 4);
                     break;
-                case 2:
+                case RARE:
                     this.changeResult(this.resultSlots[2], enchantment, level, 3);
                     break;
-                case 5:
+                case UNCOMMON:
                     this.changeResult(this.resultSlots[1], enchantment, level, 2);
                     break;
-                case 10:
+                case COMMON:
                     this.changeResult(this.resultSlots[0], enchantment, level, 1);
                     break;
                 default:
@@ -351,7 +365,6 @@ public class UnenchantingMenu extends AbstractContainerMenu {
             this.broadcastChanges();
         } else {
             super.slotsChanged(pContainer);
-            this.cleanEnchantInfo();
         }
     }
     

@@ -23,8 +23,14 @@ public class UnenchantingScreen extends AbstractContainerScreen<UnenchantingMenu
     private static final int SIZE_CONTENT = 18;
     private static final int SIZE_EXPERIENCE_IMAGE = 16;
     
-    private static final int BUTTON_EXPERIENCE_POS_X = 115;
-    private static final int BUTTON_EXPERIENCE_POS_Y = 7;
+    private static final int POS_X_BUTTON_EXP = 115;
+    private static final int POS_X_BUTTONS = 0;
+    private static final int POS_Y_BUTTON_DISABLED = 166;
+    private static final int POS_Y_BUTTON_ENABLED = 184;
+    private static final int POS_Y_BUTTON_HOUVER = 202;
+    private static final int POS_Y_BUTTON_EXP = 7;
+    private static final int POS_Y_IMAGE_EXP_DISABLED = 236;
+    private static final int POS_Y_IMAGE_EXP_ENABLED = 220;
     
     private static final ResourceLocation TEXTURE = new ResourceLocation(NeoVillagersWizard.MODID,
             "textures/gui/container/unenchanting.png");
@@ -35,7 +41,7 @@ public class UnenchantingScreen extends AbstractContainerScreen<UnenchantingMenu
     
     private List<Component> generateToolTip(int pLvlExp, int pCost, int pDamage) {
         final List<Component> list = new ArrayList<>();
-        if (this.minecraft.player.experienceLevel < pCost) {
+        if (!this.menu.isInCreativeMode() && (this.minecraft.player.experienceLevel < pCost)) {
             list.add((Component.translatable("container.enchant.level.requirement", pCost))
                     .withStyle(ChatFormatting.RED));
         } else {
@@ -50,8 +56,15 @@ public class UnenchantingScreen extends AbstractContainerScreen<UnenchantingMenu
                 lapisRequiredMessage = Component.translatable("container.unenchanting.block.lapis.many", pLvlExp);
                 levelRequiredMessage = Component.translatable("container.enchant.level.many", pLvlExp);
             }
-            list.add(lapisRequiredMessage.withStyle(numLapis >= pLvlExp ? ChatFormatting.GRAY : ChatFormatting.RED));
-            list.add(levelRequiredMessage.withStyle(ChatFormatting.GRAY));
+            
+            if (this.menu.isInCreativeMode()) {
+                list.add(lapisRequiredMessage.withStyle(ChatFormatting.GRAY));
+                list.add(levelRequiredMessage.withStyle(ChatFormatting.GRAY));
+            } else {
+                list.add(lapisRequiredMessage
+                        .withStyle(numLapis >= pLvlExp ? ChatFormatting.GREEN : ChatFormatting.RED));
+                list.add(levelRequiredMessage.withStyle(ChatFormatting.GREEN));
+            }
             
             if (pDamage > 0) {
                 MutableComponent damageMessage;
@@ -69,8 +82,8 @@ public class UnenchantingScreen extends AbstractContainerScreen<UnenchantingMenu
         
         for (int btnExp = 0; btnExp < 4; ++btnExp) {
             final int lvlExp = btnExp + 1;
-            final boolean isHover = this.isHovering(UnenchantingScreen.BUTTON_EXPERIENCE_POS_X,
-                    UnenchantingScreen.BUTTON_EXPERIENCE_POS_Y + (UnenchantingScreen.SIZE_CONTENT * btnExp),
+            final boolean isHover = this.isHovering(UnenchantingScreen.POS_X_BUTTON_EXP,
+                    UnenchantingScreen.POS_Y_BUTTON_EXP + (UnenchantingScreen.SIZE_CONTENT * btnExp),
                     UnenchantingScreen.SIZE_BUTTON_RESULT, UnenchantingScreen.SIZE_BUTTON_RESULT, pMouseX, pMouseY);
             if (isHover && (this.menu.getEnchantMinLevel()[btnExp] > 0)) {
                 final int cost = this.menu.getEnchantMinLevel()[btnExp];
@@ -88,39 +101,52 @@ public class UnenchantingScreen extends AbstractContainerScreen<UnenchantingMenu
                 this.imageHeight);
         
         for (int resultIndex = 0; resultIndex < 4; ++resultIndex) {
-            final int btnExpX = this.leftPos + UnenchantingScreen.BUTTON_EXPERIENCE_POS_X;
-            final int btnExpY = this.topPos + UnenchantingScreen.BUTTON_EXPERIENCE_POS_Y
+            final int btnExpX = this.leftPos + UnenchantingScreen.POS_X_BUTTON_EXP;
+            final int btnExpY = this.topPos + UnenchantingScreen.POS_Y_BUTTON_EXP
                     + (UnenchantingScreen.SIZE_CONTENT * resultIndex);
             
             if (this.menu.getEnchantMinLevel()[resultIndex] == 0) {
-                pGuiGraphics.blit(UnenchantingScreen.TEXTURE, btnExpX, btnExpY, 0, 184,
-                        UnenchantingScreen.SIZE_BUTTON_RESULT, UnenchantingScreen.SIZE_CONTENT);
+                pGuiGraphics.blit(UnenchantingScreen.TEXTURE, btnExpX, btnExpY, UnenchantingScreen.POS_X_BUTTONS,
+                        UnenchantingScreen.POS_Y_BUTTON_ENABLED, UnenchantingScreen.SIZE_BUTTON_RESULT,
+                        UnenchantingScreen.SIZE_CONTENT);
             } else {
-                final int expImageX = UnenchantingScreen.SIZE_EXPERIENCE_IMAGE * resultIndex;
-                final int resultButtonY = this.topPos + 8 + (UnenchantingScreen.SIZE_CONTENT * resultIndex);
-                if ((this.minecraft.player.experienceLevel < this.menu.getEnchantMinLevel()[resultIndex])
-                        || (this.menu.getCurrentNumLapis() < (resultIndex + 1))) {
-                    pGuiGraphics.blit(UnenchantingScreen.TEXTURE, btnExpX, btnExpY, 0, 184,
-                            UnenchantingScreen.SIZE_CONTENT, UnenchantingScreen.SIZE_CONTENT);
-                    pGuiGraphics.blit(UnenchantingScreen.TEXTURE, btnExpX, resultButtonY, expImageX, 236,
-                            UnenchantingScreen.SIZE_EXPERIENCE_IMAGE, UnenchantingScreen.SIZE_EXPERIENCE_IMAGE);
-                } else {
-                    final int k2 = pMouseX - btnExpX;
-                    final int l2 = pMouseY - btnExpY;
-                    final int posY = this.topPos + UnenchantingScreen.BUTTON_EXPERIENCE_POS_Y
-                            + (UnenchantingScreen.SIZE_CONTENT * resultIndex);
-                    if ((k2 >= 0) && (l2 >= 0) && (k2 < 108) && (l2 < 19)) {
-                        pGuiGraphics.blit(UnenchantingScreen.TEXTURE, btnExpX, posY, 0, 202,
-                                UnenchantingScreen.SIZE_CONTENT, UnenchantingScreen.SIZE_CONTENT);
-                    } else {
-                        pGuiGraphics.blit(UnenchantingScreen.TEXTURE, btnExpX, posY, 0, 166,
-                                UnenchantingScreen.SIZE_CONTENT, UnenchantingScreen.SIZE_CONTENT);
-                    }
-                    pGuiGraphics.blit(UnenchantingScreen.TEXTURE, btnExpX + 1, resultButtonY, expImageX, 220,
-                            UnenchantingScreen.SIZE_EXPERIENCE_IMAGE, UnenchantingScreen.SIZE_EXPERIENCE_IMAGE);
-                }
+                this.renderButton(pGuiGraphics, resultIndex, pMouseX, pMouseY, btnExpX, btnExpY);
             }
         }
     }
     
+    private void renderButton(GuiGraphics pGuiGraphics, int resultIndex, int pMouseX, int pMouseY, int btnExpX, int btnExpY) {
+        final int expImageStartPosX = UnenchantingScreen.SIZE_EXPERIENCE_IMAGE * resultIndex;
+        final boolean hasExperience = this.minecraft.player.experienceLevel >= this.menu
+                .getEnchantMinLevel()[resultIndex];
+        final boolean hasResources = this.menu.getCurrentNumLapis() >= (resultIndex + 1);
+        final int resultButtonY = this.topPos + 8 + (UnenchantingScreen.SIZE_CONTENT * resultIndex);
+        
+        if (!this.menu.isInCreativeMode() && (!hasExperience || !hasResources)) {
+            pGuiGraphics.blit(UnenchantingScreen.TEXTURE, btnExpX, btnExpY, UnenchantingScreen.POS_X_BUTTONS,
+                    UnenchantingScreen.POS_Y_BUTTON_ENABLED, UnenchantingScreen.SIZE_CONTENT,
+                    UnenchantingScreen.SIZE_CONTENT);
+            pGuiGraphics.blit(UnenchantingScreen.TEXTURE, btnExpX, resultButtonY, expImageStartPosX,
+                    UnenchantingScreen.POS_Y_IMAGE_EXP_DISABLED, UnenchantingScreen.SIZE_EXPERIENCE_IMAGE,
+                    UnenchantingScreen.SIZE_EXPERIENCE_IMAGE);
+        } else {
+            final int k2 = pMouseX - btnExpX;
+            final int l2 = pMouseY - btnExpY;
+            final int posY = this.topPos + UnenchantingScreen.POS_Y_BUTTON_EXP
+                    + (UnenchantingScreen.SIZE_CONTENT * resultIndex);
+            final int longResultContent = UnenchantingScreen.SIZE_CONTENT * 2;
+            if ((k2 >= 0) && (l2 >= 0) && (k2 < longResultContent) && (l2 < UnenchantingScreen.SIZE_CONTENT)) {
+                pGuiGraphics.blit(UnenchantingScreen.TEXTURE, btnExpX, posY, UnenchantingScreen.POS_X_BUTTONS,
+                        UnenchantingScreen.POS_Y_BUTTON_HOUVER, UnenchantingScreen.SIZE_CONTENT,
+                        UnenchantingScreen.SIZE_CONTENT);
+            } else {
+                pGuiGraphics.blit(UnenchantingScreen.TEXTURE, btnExpX, posY, UnenchantingScreen.POS_X_BUTTONS,
+                        UnenchantingScreen.POS_Y_BUTTON_DISABLED, UnenchantingScreen.SIZE_CONTENT,
+                        UnenchantingScreen.SIZE_CONTENT);
+            }
+            pGuiGraphics.blit(UnenchantingScreen.TEXTURE, btnExpX + 1, resultButtonY, expImageStartPosX,
+                    UnenchantingScreen.POS_Y_IMAGE_EXP_ENABLED, UnenchantingScreen.SIZE_EXPERIENCE_IMAGE,
+                    UnenchantingScreen.SIZE_EXPERIENCE_IMAGE);
+        }
+    }
 }
