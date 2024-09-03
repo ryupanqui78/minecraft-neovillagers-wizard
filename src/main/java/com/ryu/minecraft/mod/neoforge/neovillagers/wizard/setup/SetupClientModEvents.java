@@ -5,7 +5,7 @@ import com.ryu.minecraft.mod.neoforge.neovillagers.wizard.client.gui.screens.Une
 
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod.EventBusSubscriber;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
 @EventBusSubscriber(modid = NeoVillagersWizard.MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)

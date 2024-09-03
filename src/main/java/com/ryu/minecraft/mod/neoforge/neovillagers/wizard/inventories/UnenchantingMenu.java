@@ -1,14 +1,14 @@
 package com.ryu.minecraft.mod.neoforge.neovillagers.wizard.inventories;
 
-import java.util.Map;
 import java.util.Optional;
 
-import com.google.common.collect.Maps;
+import com.ryu.minecraft.mod.neoforge.neovillagers.wizard.NeoVillagersWizard;
 import com.ryu.minecraft.mod.neoforge.neovillagers.wizard.helpers.UnenchantingHelper;
 import com.ryu.minecraft.mod.neoforge.neovillagers.wizard.inventories.slots.ItemSlotInput;
 import com.ryu.minecraft.mod.neoforge.neovillagers.wizard.setup.SetupBlocks;
 import com.ryu.minecraft.mod.neoforge.neovillagers.wizard.setup.SetupMenus;
 
+import net.minecraft.core.Holder;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -20,7 +20,6 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 public class UnenchantingMenu extends AbstractContainerMenu {
@@ -146,14 +145,13 @@ public class UnenchantingMenu extends AbstractContainerMenu {
     
     private void changeResult(ResultContainer resultContainer, Enchantment pEnchantment, int pLevel, int i) {
         if (resultContainer.getItem(0).isEmpty()) {
-            final Map<Enchantment, Integer> resultEnchantmentMap = Maps.newLinkedHashMap();
             final ItemStack resultItem = new ItemStack(Items.ENCHANTED_BOOK);
             final ItemStack inputItem = this.inputSlots.getItem(UnenchantingMenu.SLOT_INPUT_ITEM_INDEX);
-            
             final int newLevel = UnenchantingHelper.defineLevel(pEnchantment, pLevel, this.totalPower);
             
-            resultEnchantmentMap.put(pEnchantment, newLevel);
-            EnchantmentHelper.setEnchantments(resultEnchantmentMap, resultItem);
+            resultItem.enchant(pEnchantment, newLevel);
+            NeoVillagersWizard.LOGGER.debug("Adding enchantment: {}, level: {}", pEnchantment.getDescriptionId(),
+                    newLevel);
             resultContainer.setItem(0, resultItem);
             
             this.enchantLevel[i - 1] = newLevel;
@@ -175,7 +173,6 @@ public class UnenchantingMenu extends AbstractContainerMenu {
                 this.enchantDamage[i - 1] = damage;
             }
         }
-        
     }
     
     private void cleanEnchantInfo() {
@@ -230,37 +227,38 @@ public class UnenchantingMenu extends AbstractContainerMenu {
     }
     
     protected void onTake(ItemStack pStack) {
-        final Optional<Enchantment> resultEnchantment = EnchantmentHelper.getEnchantments(pStack).keySet().stream()
-                .findFirst();
+        final Optional<Holder<Enchantment>> result = (EnchantmentHelper.getEnchantmentsForCrafting(pStack)).keySet()
+                .stream().findFirst();
         
-        if (!resultEnchantment.isPresent()) {
+        if (result.isEmpty()) {
             return;
         }
         
         final ItemStack inputItem = this.inputSlots.getItem(UnenchantingMenu.SLOT_INPUT_ITEM_INDEX);
-        final Map<Enchantment, Integer> inputEnchantMap = EnchantmentHelper.getEnchantments(inputItem);
-        final Rarity rarity = resultEnchantment.get().getRarity();
+        final Enchantment resultEnchantment = result.get().value();
+        final int weight = resultEnchantment.getWeight();
         
         int cost = 0;
         int damage;
         
-        inputEnchantMap.remove(resultEnchantment.get());
-        EnchantmentHelper.setEnchantments(inputEnchantMap, inputItem);
+        // Remove enchantment
+        EnchantmentHelper.updateEnchantments(inputItem,
+                element -> element.removeIf(holderElement -> holderElement.value() == resultEnchantment));
         
-        switch (rarity) {
-        case VERY_RARE:
+        switch (weight) {
+        case 1:
             cost = 4;
             damage = this.enchantDamage[3];
             break;
-        case RARE:
+        case 2:
             cost = 3;
             damage = this.enchantDamage[2];
             break;
-        case UNCOMMON:
+        case 5:
             cost = 2;
             damage = this.enchantDamage[1];
             break;
-        case COMMON:
+        case 10:
         default:
             cost = 1;
             damage = this.enchantDamage[0];
@@ -269,19 +267,14 @@ public class UnenchantingMenu extends AbstractContainerMenu {
         if (inputItem.isDamageableItem() && (damage > 0)) {
             inputItem.setDamageValue(inputItem.getDamageValue() + ((inputItem.getMaxDamage() * damage) / 100));
             if (inputItem.getDamageValue() >= (inputItem.getMaxDamage() - 1)) {
-                inputItem.shrink(1);
+                this.inputSlots.removeItem(UnenchantingMenu.SLOT_INPUT_ITEM_INDEX, 1);
             } else {
                 this.inputSlots.setChanged();
             }
         } else {
-            if (inputItem.is(Items.ENCHANTED_BOOK)) {
-                if (inputEnchantMap.size() == 0) {
-                    this.inputSlots.setItem(UnenchantingMenu.SLOT_INPUT_ITEM_INDEX, new ItemStack(Items.BOOK));
-                } else {
-                    final ItemStack newItemStack = new ItemStack(Items.ENCHANTED_BOOK);
-                    EnchantmentHelper.setEnchantments(inputEnchantMap, newItemStack);
-                    this.inputSlots.setItem(UnenchantingMenu.SLOT_INPUT_ITEM_INDEX, newItemStack);
-                }
+            if (inputItem.is(Items.ENCHANTED_BOOK)
+                    && EnchantmentHelper.getEnchantmentsForCrafting(inputItem).isEmpty()) {
+                this.inputSlots.setItem(UnenchantingMenu.SLOT_INPUT_ITEM_INDEX, new ItemStack(Items.BOOK));
             }
         }
         this.inputSlots.removeItem(UnenchantingMenu.SLOT_WRITABLE_BOOK_INDEX, 1);
@@ -339,23 +332,22 @@ public class UnenchantingMenu extends AbstractContainerMenu {
         this.cleanEnchantInfo();
         if (this.hasAllInputSlot()) {
             final ItemStack inputItem = this.inputSlots.getItem(UnenchantingMenu.SLOT_INPUT_ITEM_INDEX);
-            final Map<Enchantment, Integer> enchantmentMap = EnchantmentHelper.getEnchantments(inputItem);
-            
-            enchantmentMap.keySet().forEach(enchantment -> {
-                final Rarity rarity = enchantment.getRarity();
-                final int level = enchantmentMap.get(enchantment);
-                switch (rarity) {
-                case VERY_RARE:
-                    this.changeResult(this.resultSlots[3], enchantment, level, 4);
+            EnchantmentHelper.getEnchantmentsForCrafting(inputItem).keySet().forEach(enchantment -> {
+                final int weight = enchantment.value().getWeight();
+                final int level = inputItem.getEnchantmentLevel(enchantment.value());
+                
+                switch (weight) {
+                case 1:
+                    this.changeResult(this.resultSlots[3], enchantment.value(), level, 4);
                     break;
-                case RARE:
-                    this.changeResult(this.resultSlots[2], enchantment, level, 3);
+                case 2:
+                    this.changeResult(this.resultSlots[2], enchantment.value(), level, 3);
                     break;
-                case UNCOMMON:
-                    this.changeResult(this.resultSlots[1], enchantment, level, 2);
+                case 5:
+                    this.changeResult(this.resultSlots[1], enchantment.value(), level, 2);
                     break;
-                case COMMON:
-                    this.changeResult(this.resultSlots[0], enchantment, level, 1);
+                case 10:
+                    this.changeResult(this.resultSlots[0], enchantment.value(), level, 1);
                     break;
                 default:
                     // Nothing
