@@ -1,0 +1,11 @@
+{
+  "block.neovillagerswizard.unenchanting": "Стіл розчарування",
+  
+  "container.unenchanting.block.lapis.one": "1 блок лазуриту",
+  "container.unenchanting.block.lapis.many": "%s блоків лазуриту",
+  "container.unenchanting.damage": "%s%% шкоди для отримання",
+    
+  "entity.minecraft.villager.neovillagerswizard.wizard": "Чаклун",
+  
+  "screen.container.unenchanting": "Стіл розчарування"
+}
