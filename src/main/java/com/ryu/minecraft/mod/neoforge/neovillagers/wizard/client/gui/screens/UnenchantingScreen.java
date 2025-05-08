@@ -32,7 +32,7 @@ public class UnenchantingScreen extends AbstractContainerScreen<UnenchantingMenu
     private static final int POS_Y_IMAGE_EXP_DISABLED = 236;
     private static final int POS_Y_IMAGE_EXP_ENABLED = 220;
     
-    private static final ResourceLocation TEXTURE = new ResourceLocation(NeoVillagersWizard.MODID,
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(NeoVillagersWizard.MODID,
             "textures/gui/container/unenchanting.png");
     
     public UnenchantingScreen(UnenchantingMenu pMenu, Inventory pPlayerInventory, Component pTitle) {

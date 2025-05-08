@@ -143,15 +143,15 @@ public class UnenchantingMenu extends AbstractContainerMenu {
         }
     }
     
-    private void changeResult(ResultContainer resultContainer, Enchantment pEnchantment, int pLevel, int i) {
+    private void changeResult(ResultContainer resultContainer, Holder<Enchantment> pEnchantment, int pLevel, int i) {
         if (resultContainer.getItem(0).isEmpty()) {
             final ItemStack resultItem = new ItemStack(Items.ENCHANTED_BOOK);
             final ItemStack inputItem = this.inputSlots.getItem(UnenchantingMenu.SLOT_INPUT_ITEM_INDEX);
-            final int newLevel = UnenchantingHelper.defineLevel(pEnchantment, pLevel, this.totalPower);
+            final int newLevel = UnenchantingHelper.defineLevel(pEnchantment.value(), pLevel, this.totalPower);
             
             resultItem.enchant(pEnchantment, newLevel);
-            NeoVillagersWizard.LOGGER.debug("Adding enchantment: {}, level: {}", pEnchantment.getDescriptionId(),
-                    newLevel);
+            NeoVillagersWizard.LOGGER.debug("Adding enchantment: {}, level: {}",
+                    pEnchantment.value().description().getString(), newLevel);
             resultContainer.setItem(0, resultItem);
             
             this.enchantLevel[i - 1] = newLevel;
@@ -334,20 +334,20 @@ public class UnenchantingMenu extends AbstractContainerMenu {
             final ItemStack inputItem = this.inputSlots.getItem(UnenchantingMenu.SLOT_INPUT_ITEM_INDEX);
             EnchantmentHelper.getEnchantmentsForCrafting(inputItem).keySet().forEach(enchantment -> {
                 final int weight = enchantment.value().getWeight();
-                final int level = inputItem.getEnchantmentLevel(enchantment.value());
+                final int level = inputItem.getEnchantmentLevel(enchantment);
                 
                 switch (weight) {
                 case 1:
-                    this.changeResult(this.resultSlots[3], enchantment.value(), level, 4);
+                    this.changeResult(this.resultSlots[3], enchantment, level, 4);
                     break;
                 case 2:
-                    this.changeResult(this.resultSlots[2], enchantment.value(), level, 3);
+                    this.changeResult(this.resultSlots[2], enchantment, level, 3);
                     break;
                 case 5:
-                    this.changeResult(this.resultSlots[1], enchantment.value(), level, 2);
+                    this.changeResult(this.resultSlots[1], enchantment, level, 2);
                     break;
                 case 10:
-                    this.changeResult(this.resultSlots[0], enchantment.value(), level, 1);
+                    this.changeResult(this.resultSlots[0], enchantment, level, 1);
                     break;
                 default:
                     // Nothing
