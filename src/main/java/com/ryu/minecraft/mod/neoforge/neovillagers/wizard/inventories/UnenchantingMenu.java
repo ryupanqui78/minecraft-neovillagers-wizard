@@ -111,7 +111,7 @@ public class UnenchantingMenu extends AbstractContainerMenu {
     
     // Server constructor
     public UnenchantingMenu(int pContainerId, Inventory pInventory, ContainerLevelAccess pAccess) {
-        super(SetupMenus.UNENCHANTING_CONTAINER.get(), pContainerId);
+        super(SetupMenus.UNENCHANTING.get(), pContainerId);
         
         this.player = pInventory.player;
         this.access = pAccess;
@@ -200,7 +200,7 @@ public class UnenchantingMenu extends AbstractContainerMenu {
         boolean hasValues = false;
         if (!this.inputSlots.isEmpty()) {
             final boolean hasItem = !this.inputSlots.getItem(UnenchantingMenu.SLOT_INPUT_ITEM_INDEX).isEmpty();
-            if (!this.player.getAbilities().instabuild) {
+            if (!this.isInCreativeMode()) {
                 final boolean hasBook = !this.inputSlots.getItem(UnenchantingMenu.SLOT_WRITABLE_BOOK_INDEX).isEmpty();
                 final boolean hasLapis = !this.inputSlots.getItem(UnenchantingMenu.SLOT_LAPIS_BLOCK_INDEX).isEmpty();
                 hasValues = hasBook && hasLapis && hasItem;

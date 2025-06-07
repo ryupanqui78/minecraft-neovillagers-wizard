@@ -14,7 +14,7 @@ public class SetupMenus {
     public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(BuiltInRegistries.MENU,
             NeoVillagersWizard.MODID);
     
-    public static final DeferredHolder<MenuType<?>, MenuType<UnenchantingMenu>> UNENCHANTING_CONTAINER = SetupMenus.MENUS
+    public static final DeferredHolder<MenuType<?>, MenuType<UnenchantingMenu>> UNENCHANTING = SetupMenus.MENUS
             .register(UnenchantingMenu.MENU_NAME,
                     () -> new MenuType<UnenchantingMenu>(UnenchantingMenu::new, FeatureFlags.DEFAULT_FLAGS));
     

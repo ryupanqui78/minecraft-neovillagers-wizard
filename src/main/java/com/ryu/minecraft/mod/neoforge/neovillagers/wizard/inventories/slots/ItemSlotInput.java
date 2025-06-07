@@ -16,7 +16,7 @@ public class ItemSlotInput extends Slot {
     
     @Override
     public boolean mayPlace(ItemStack pStack) {
-        return pStack.getItem() == this.item;
+        return pStack.is(this.item);
     }
     
 }

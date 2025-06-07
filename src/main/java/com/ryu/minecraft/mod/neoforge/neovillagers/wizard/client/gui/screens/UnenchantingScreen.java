@@ -9,6 +9,7 @@ import com.ryu.minecraft.mod.neoforge.neovillagers.wizard.inventories.Unenchanti
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -97,8 +98,8 @@ public class UnenchantingScreen extends AbstractContainerScreen<UnenchantingMenu
     
     @Override
     protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
-        pGuiGraphics.blit(UnenchantingScreen.TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth,
-                this.imageHeight);
+        pGuiGraphics.blit(RenderType::guiTextured, UnenchantingScreen.TEXTURE, this.leftPos, this.topPos, 0, 0,
+                this.imageWidth, this.imageHeight, 256, 256);
         
         for (int resultIndex = 0; resultIndex < 4; ++resultIndex) {
             final int btnExpX = this.leftPos + UnenchantingScreen.POS_X_BUTTON_EXP;
@@ -106,9 +107,9 @@ public class UnenchantingScreen extends AbstractContainerScreen<UnenchantingMenu
                     + (UnenchantingScreen.SIZE_CONTENT * resultIndex);
             
             if (this.menu.getEnchantMinLevel()[resultIndex] == 0) {
-                pGuiGraphics.blit(UnenchantingScreen.TEXTURE, btnExpX, btnExpY, UnenchantingScreen.POS_X_BUTTONS,
-                        UnenchantingScreen.POS_Y_BUTTON_ENABLED, UnenchantingScreen.SIZE_BUTTON_RESULT,
-                        UnenchantingScreen.SIZE_CONTENT);
+                pGuiGraphics.blit(RenderType::guiTextured, UnenchantingScreen.TEXTURE, btnExpX, btnExpY,
+                        UnenchantingScreen.POS_X_BUTTONS, UnenchantingScreen.POS_Y_BUTTON_ENABLED,
+                        UnenchantingScreen.SIZE_BUTTON_RESULT, UnenchantingScreen.SIZE_CONTENT, 256, 256);
             } else {
                 this.renderButton(pGuiGraphics, resultIndex, pMouseX, pMouseY, btnExpX, btnExpY);
             }
@@ -123,12 +124,12 @@ public class UnenchantingScreen extends AbstractContainerScreen<UnenchantingMenu
         final int resultButtonY = this.topPos + 8 + (UnenchantingScreen.SIZE_CONTENT * resultIndex);
         
         if (!this.menu.isInCreativeMode() && (!hasExperience || !hasResources)) {
-            pGuiGraphics.blit(UnenchantingScreen.TEXTURE, btnExpX, btnExpY, UnenchantingScreen.POS_X_BUTTONS,
-                    UnenchantingScreen.POS_Y_BUTTON_ENABLED, UnenchantingScreen.SIZE_CONTENT,
-                    UnenchantingScreen.SIZE_CONTENT);
-            pGuiGraphics.blit(UnenchantingScreen.TEXTURE, btnExpX, resultButtonY, expImageStartPosX,
-                    UnenchantingScreen.POS_Y_IMAGE_EXP_DISABLED, UnenchantingScreen.SIZE_EXPERIENCE_IMAGE,
-                    UnenchantingScreen.SIZE_EXPERIENCE_IMAGE);
+            pGuiGraphics.blit(RenderType::guiTextured, UnenchantingScreen.TEXTURE, btnExpX, btnExpY,
+                    UnenchantingScreen.POS_X_BUTTONS, UnenchantingScreen.POS_Y_BUTTON_ENABLED,
+                    UnenchantingScreen.SIZE_CONTENT, UnenchantingScreen.SIZE_CONTENT, 256, 256);
+            pGuiGraphics.blit(RenderType::guiTextured, UnenchantingScreen.TEXTURE, btnExpX, resultButtonY,
+                    expImageStartPosX, UnenchantingScreen.POS_Y_IMAGE_EXP_DISABLED,
+                    UnenchantingScreen.SIZE_EXPERIENCE_IMAGE, UnenchantingScreen.SIZE_EXPERIENCE_IMAGE, 256, 256);
         } else {
             final int k2 = pMouseX - btnExpX;
             final int l2 = pMouseY - btnExpY;
@@ -136,17 +137,17 @@ public class UnenchantingScreen extends AbstractContainerScreen<UnenchantingMenu
                     + (UnenchantingScreen.SIZE_CONTENT * resultIndex);
             final int longResultContent = UnenchantingScreen.SIZE_CONTENT * 2;
             if ((k2 >= 0) && (l2 >= 0) && (k2 < longResultContent) && (l2 < UnenchantingScreen.SIZE_CONTENT)) {
-                pGuiGraphics.blit(UnenchantingScreen.TEXTURE, btnExpX, posY, UnenchantingScreen.POS_X_BUTTONS,
-                        UnenchantingScreen.POS_Y_BUTTON_HOUVER, UnenchantingScreen.SIZE_CONTENT,
-                        UnenchantingScreen.SIZE_CONTENT);
+                pGuiGraphics.blit(RenderType::guiTextured, UnenchantingScreen.TEXTURE, btnExpX, posY,
+                        UnenchantingScreen.POS_X_BUTTONS, UnenchantingScreen.POS_Y_BUTTON_HOUVER,
+                        UnenchantingScreen.SIZE_CONTENT, UnenchantingScreen.SIZE_CONTENT, 256, 256);
             } else {
-                pGuiGraphics.blit(UnenchantingScreen.TEXTURE, btnExpX, posY, UnenchantingScreen.POS_X_BUTTONS,
-                        UnenchantingScreen.POS_Y_BUTTON_DISABLED, UnenchantingScreen.SIZE_CONTENT,
-                        UnenchantingScreen.SIZE_CONTENT);
+                pGuiGraphics.blit(RenderType::guiTextured, UnenchantingScreen.TEXTURE, btnExpX, posY,
+                        UnenchantingScreen.POS_X_BUTTONS, UnenchantingScreen.POS_Y_BUTTON_DISABLED,
+                        UnenchantingScreen.SIZE_CONTENT, UnenchantingScreen.SIZE_CONTENT, 256, 256);
             }
-            pGuiGraphics.blit(UnenchantingScreen.TEXTURE, btnExpX + 1, resultButtonY, expImageStartPosX,
-                    UnenchantingScreen.POS_Y_IMAGE_EXP_ENABLED, UnenchantingScreen.SIZE_EXPERIENCE_IMAGE,
-                    UnenchantingScreen.SIZE_EXPERIENCE_IMAGE);
+            pGuiGraphics.blit(RenderType::guiTextured, UnenchantingScreen.TEXTURE, btnExpX + 1, resultButtonY,
+                    expImageStartPosX, UnenchantingScreen.POS_Y_IMAGE_EXP_ENABLED,
+                    UnenchantingScreen.SIZE_EXPERIENCE_IMAGE, UnenchantingScreen.SIZE_EXPERIENCE_IMAGE, 256, 256);
         }
     }
 }

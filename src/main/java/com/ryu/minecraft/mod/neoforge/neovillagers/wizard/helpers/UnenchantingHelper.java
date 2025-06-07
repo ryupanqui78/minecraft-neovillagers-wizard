@@ -95,7 +95,10 @@ public class UnenchantingHelper {
         } else if ((totalPower <= 5) && (originalLevel > 1)) {
             level = UnenchantingHelper.calculateLevel4(originalLevel, enchantment.getMaxLevel() - 1);
         }
-        return level > 0 ? level : 1;
+        if (level < enchantment.getMinLevel()) {
+            level = enchantment.getMinLevel();
+        }
+        return level;
     }
     
     private static float getPower(Level pLevel, BlockPos pPos) {

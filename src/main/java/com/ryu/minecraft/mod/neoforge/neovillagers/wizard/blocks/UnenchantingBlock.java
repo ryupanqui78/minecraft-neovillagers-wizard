@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -30,7 +30,7 @@ public class UnenchantingBlock extends Block {
     
     public static final String BLOCK_NAME = "unenchanting";
     public static final MapCodec<UnenchantingBlock> CODEC = BlockBehaviour.simpleCodec(UnenchantingBlock::new);
-    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     
     private static final Component CONTAINER_TITLE = Component.translatable("screen.container.unenchanting");
     private static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 12.0D, 16.0D);
@@ -78,7 +78,7 @@ public class UnenchantingBlock extends Block {
             pPlayer.openMenu(pState.getMenuProvider(pLevel, pPos));
             return InteractionResult.CONSUME;
         }
-        return InteractionResult.sidedSuccess(pLevel.isClientSide);
+        return InteractionResult.SUCCESS;
     }
     
 }

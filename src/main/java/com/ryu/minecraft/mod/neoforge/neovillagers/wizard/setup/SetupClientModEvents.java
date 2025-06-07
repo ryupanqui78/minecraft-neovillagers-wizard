@@ -13,7 +13,7 @@ public class SetupClientModEvents {
     
     @SubscribeEvent
     public static void registerMenuSreen(RegisterMenuScreensEvent event) {
-        event.register(SetupMenus.UNENCHANTING_CONTAINER.get(), UnenchantingScreen::new);
+        event.register(SetupMenus.UNENCHANTING.get(), UnenchantingScreen::new);
     }
     
     private SetupClientModEvents() {
