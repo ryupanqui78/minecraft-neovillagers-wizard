@@ -5,7 +5,7 @@
   "container.unenchanting.block.lapis.many": "%s Blocks of Lapis Lazuli",
   "container.unenchanting.damage": "%s%% damage to receive",
     
-  "entity.minecraft.villager.neovillagerswizard.wizard": "Wizard",
+  "entity.neovillagerswizard.villager.wizard": "Wizard",
   
   "screen.container.unenchanting": "Unenchanting table"
 }

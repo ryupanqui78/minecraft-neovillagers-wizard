@@ -13,7 +13,7 @@ public class SetupGeneralEvents {
     
     @SubscribeEvent
     public static void addCustomTrades(VillagerTradesEvent event) {
-        if (event.getType() == SetupVillagers.WIZARD.get()) {
+        if (event.getType() == SetupVillagers.WIZARD) {
             final Worker worker = new Wizard();
             worker.getTrades(event);
         }
