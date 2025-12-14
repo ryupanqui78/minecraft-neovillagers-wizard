@@ -1,3 +1,5 @@
+0.11.6-1.21.10:
+ - Upgrade to Minecraft 1.21.10
 0.10.6-1.21.9:
  - Upgrade to Minecraft 1.21.9
 0.9.6-1.21.8:
