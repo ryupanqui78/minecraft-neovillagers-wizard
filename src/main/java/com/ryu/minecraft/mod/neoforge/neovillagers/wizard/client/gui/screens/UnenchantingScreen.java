@@ -13,7 +13,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 public class UnenchantingScreen extends AbstractContainerScreen<UnenchantingMenu> {
@@ -31,7 +31,7 @@ public class UnenchantingScreen extends AbstractContainerScreen<UnenchantingMenu
     private static final int POS_Y_IMAGE_EXP_DISABLED = 236;
     private static final int POS_Y_IMAGE_EXP_ENABLED = 220;
     
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(NeoVillagersWizard.MODID,
+    private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath(NeoVillagersWizard.MODID,
             "textures/gui/container/unenchanting.png");
     
     public UnenchantingScreen(UnenchantingMenu pMenu, Inventory pPlayerInventory, Component pTitle) {

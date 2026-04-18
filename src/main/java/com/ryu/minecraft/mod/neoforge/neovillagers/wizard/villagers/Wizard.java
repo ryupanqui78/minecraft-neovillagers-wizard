@@ -7,11 +7,11 @@ import com.ryu.minecraft.mod.neoforge.neovillagers.wizard.villagers.trades.Emera
 import com.ryu.minecraft.mod.neoforge.neovillagers.wizard.villagers.trades.ItemForEmeraldTradeOffer;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.entity.npc.VillagerProfession;
-import net.minecraft.world.entity.npc.VillagerTrades;
-import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
+import net.minecraft.world.entity.npc.villager.VillagerProfession;
+import net.minecraft.world.entity.npc.villager.VillagerTrades;
+import net.minecraft.world.entity.npc.villager.VillagerTrades.ItemListing;
 import net.minecraft.world.item.Items;
 
 public class Wizard extends Worker {
@@ -20,7 +20,7 @@ public class Wizard extends Worker {
     public static final String ENTITY_POI_NAME = "wizard_poi";
     
     public static VillagerProfession registerVillager() {
-        final ResourceLocation villagerResource = ResourceLocation.fromNamespaceAndPath(NeoVillagersWizard.MODID,
+        final Identifier villagerResource = Identifier.fromNamespaceAndPath(NeoVillagersWizard.MODID,
                 Wizard.ENTITY_NAME);
         final Component villager = Component
                 .translatable("entity." + villagerResource.getNamespace() + ".villager." + villagerResource.getPath());

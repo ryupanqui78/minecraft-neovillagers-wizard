@@ -1,6 +1,6 @@
 package com.ryu.minecraft.mod.neoforge.neovillagers.wizard.villagers;
 
-import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
+import net.minecraft.world.entity.npc.villager.VillagerTrades.ItemListing;
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 
 public abstract class Worker {
