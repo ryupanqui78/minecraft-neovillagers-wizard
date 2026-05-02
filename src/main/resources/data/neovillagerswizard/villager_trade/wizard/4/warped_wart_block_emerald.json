@@ -1,0 +1,13 @@
+{
+  "gives": {
+    "id": "minecraft:emerald",
+    "count": 1
+  },
+  "max_uses": 8.0,
+  "reputation_discount": 0.05,
+  "wants": {
+    "id": "minecraft:warped_wart_block",
+    "count": 16
+  },
+  "xp": 8.0
+}

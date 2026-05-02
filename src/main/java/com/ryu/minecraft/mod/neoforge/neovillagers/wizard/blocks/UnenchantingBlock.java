@@ -52,8 +52,8 @@ public class UnenchantingBlock extends Block {
     
     @Override
     public MenuProvider getMenuProvider(BlockState pState, Level pLevel, BlockPos pPos) {
-        return new SimpleMenuProvider((pContainerId, playerInv, pAccess) -> new UnenchantingMenu(pContainerId,
-                playerInv, ContainerLevelAccess.create(pLevel, pPos)), UnenchantingBlock.CONTAINER_TITLE);
+        return new SimpleMenuProvider((pContainerId, playerInv, _) -> new UnenchantingMenu(pContainerId, playerInv,
+                ContainerLevelAccess.create(pLevel, pPos)), UnenchantingBlock.CONTAINER_TITLE);
     }
     
     @Override

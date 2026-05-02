@@ -324,7 +324,7 @@ public class UnenchantingMenu extends AbstractContainerMenu {
     @Override
     public void removed(Player pPlayer) {
         super.removed(pPlayer);
-        this.access.execute((pLevel, pPos) -> this.clearContainer(pPlayer, this.inputSlots));
+        this.access.execute((_, _) -> this.clearContainer(pPlayer, this.inputSlots));
     }
     
     @Override
